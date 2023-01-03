@@ -1,0 +1,87 @@
+package com.cg.hcs;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.cg.hcs.dto.User;
+import com.cg.hcs.repository.IUserRepository;
+import com.cg.hcs.service.IUserServiceImpl;
+
+@ExtendWith(SpringExtension.class)
+class UserTest {
+	@Mock
+	private IUserServiceImpl iUserServiceImpl;
+
+	@InjectMocks
+	private IUserRepository iUserRepository;
+	
+	
+	
+	@Test
+	void findAllUsers() {
+		List<User> users = new ArrayList<>();
+        User user1=new User();
+        user1.setId(1);
+        user1.setPassword("anjali@609");
+        user1.setRole("user");
+   	    user1.setUsername("Anjali");
+   	    
+   	     User user2=new User();
+         user2.setId(2);
+         user2.setPassword("anjali@689");
+         user2.setRole("admin");
+	     user2.setUsername("Anju");
+	     
+	     users.add(user1);
+	     users.add(user2);
+	     
+	     when(iUserServiceImpl.getAllUser()).thenReturn(users);
+	        List<User> usersList = iUserServiceImpl.getAllUser();
+	        
+	        //System.out.println(usersList);
+	        assertEquals(2,usersList.size());
+}
+	
+
+	@Test
+	void testRemoveUser() {
+	
+	User user1=new User();
+	user1.setId(1);
+	user1.setPassword("Anjali@609");
+	user1.setRole("user");
+	user1.setUsername("Anjali");
+	
+	Optional<User> optionalUser = Optional.of(user1);
+	when(iUserRepository.findById(1)).thenReturn(optionalUser);
+	User user = optionalUser.get(); 
+    //doNothing().when(iUserRepository).deleteById(1);
+	User rUser = iUserServiceImpl.removeUser(user1);
+	assertEquals(user,rUser);
+	}
+                  
+
+	
+	
+	@Test
+	 void addUser() { User user = new User(); user.setId(1);
+	 user.setPassword("anjali@609"); user.setRole("user");
+	 user.setUsername("Anjali");
+	 when(iUserRepository.save(user)).thenReturn(user); User newUser =
+	 iUserServiceImpl.addUser(user); assertEquals(user,newUser); }
+	 
+}
+

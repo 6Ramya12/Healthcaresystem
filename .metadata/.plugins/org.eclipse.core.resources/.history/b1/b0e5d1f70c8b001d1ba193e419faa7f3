@@ -1,0 +1,25 @@
+package com.cg.hcs.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+import com.cg.hcs.dto.User;
+import com.cg.hcs.repository.IUserRepository;
+
+class IUserServiceImplTest {
+
+	
+	 @Mock
+	 private IUserRepository iuserRepository;
+	  @InjectMocks 
+	  private IUserServiceImpl iuserService;
+	
+	private  List<User> userList ;
+	private User user;
+
+}
