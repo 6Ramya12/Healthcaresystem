@@ -1,0 +1,96 @@
+package com.cg.hcs.service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cg.hcs.dto.Appointment;
+import com.cg.hcs.repository.IAppointmentRepository;
+@Service
+public class IAppointmentServiceImpl implements IAppointmentService{
+	//public class AppointmentServiceImpl extends JpaRepository<Appointment,Integer>{
+
+		@Autowired 
+		private IAppointmentRepository repo;
+		/*@author :Ramya
+		 * @return :Appointment
+		 * @description :This method add appointment to the repository and return appointment
+		 */
+		
+	    @Override
+		public Appointment addAppointment(Appointment appointment) {
+		    repo.save(appointment);
+			return appointment;
+		}
+	    /*@author :Ramya
+		 * @return :Appointment
+		 * @description :This method view appointment to the repository and return appointment 
+		 */
+	   @Override
+		public Set<Appointment> viewAppointment(String patientName) {
+			List<Appointment> appointment =repo.findAll();
+			
+			
+		appointment.stream().forEach(System.out::println);
+			
+			return appointment
+					.stream()
+					.filter(t->t.getPatient().equals(appointment))
+					.collect(Collectors.toSet());
+			
+		}
+	   /*@author :Ramya
+		 * @return :Appointment
+		 * @description :This method update appointment to the repository and return appointment 
+		 */
+	   @Override
+	   public Appointment updateAppointment(Appointment appointment) {
+		  Appointment appointment2 =repo.save(appointment);
+		
+		  return appointment2;
+	}
+	   /*@author :Ramya
+		 * @return :Appointment
+		 * @description :This method view appointment by id to the repository and return appointment 
+		 */
+	@Override
+	public Appointment viewAppointment(int id) {
+		Appointment appointment =repo.findById(id).get();
+		 return appointment;
+		
+	}
+	 /*@author :Ramya
+	 * @return :Appointment
+	 * @description :This method remove appointment to the repository and return appointment 
+	 */
+	@Override
+	public Appointment removeAppointment(Appointment appointment) {
+		repo.delete(appointment);
+		return appointment;
+		
+		
+	}
+	 /*@author :Ramya
+	 * @return :Appointment
+	 * @description :This method get appointment list to the repository and return appointment 
+	 */
+	@Override
+	public List<Appointment> getAppointmentList(int centerid, String test, int status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	   
+
+
+
+		
+
+	
+
+ 
+
+}
